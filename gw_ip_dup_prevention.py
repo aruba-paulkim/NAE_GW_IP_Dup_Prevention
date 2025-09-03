@@ -340,6 +340,8 @@ class Policy(NAE):
             res = sess.request("PATCH", url, data=payload, verify=False)
             if res.status_code == 204:
                 print(f"[{inspect.currentframe().f_code.co_name}] {interface_id} admin down Success.")
+                msg = f"{neighbor_ip}, {neighbor_port} admin down Success."
+                ActionSyslog(msg, severity=SYSLOG_WARNING)
                 return "OK"
             else:
                 print(f"[{inspect.currentframe().f_code.co_name}] ERROR:Unknown response, status_code:{res.status_code}, text:{res.text}")
